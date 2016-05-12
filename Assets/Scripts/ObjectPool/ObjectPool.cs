@@ -2,59 +2,74 @@
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
-/// Activeではないオブジェクトをリターン
+/// 2016.05.12
+/// 制作者:Yuta Hayashi
+/// ObjectPool
 /// </summary>
-public class ObjectPool : MonoBehaviour {
-    public static ObjectPool current;
-    [SerializeField]
-    private GameObject prefab;
-    [SerializeField]
-    private int maxPooledValue = 10;
-    List<GameObject> pooledObjects;
 
-    private bool willGrow = true;//シーン中にmaxPooledValueを増やしても対応できるフラグ
 
-    void Awake()
+public class ObjectPool : MonoBehaviour
+{
+    private static ObjectPool _instance;
+    // シングルトン
+    public static ObjectPool instance
     {
-        current = this;
-    }
-
-    void Start () {
-        pooledObjects = new List<GameObject>();
-        //Poolします
-        for(int i = 0; i < maxPooledValue; i++)
+        get
         {
-            //インスタンス生成
-            GameObject poolObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //無効化
-            poolObject.SetActive(false);
-            //配列追加
-            pooledObjects.Add(poolObject);
-        }
-	}
-	/// <summary>
-    /// Activeオブジェクトを使いまわす
-    /// </summary>
-    /// <returns>ActiveGameObject</returns>
-    public GameObject GetPooledObject()
-    {
-        //すべてのオブジェクトに対して
-        for(int i = 0; i < pooledObjects.Count; i++)
-        {
-            //ゲームオブジェクトがシーンで有効でないとき
-            if (!pooledObjects[i].activeInHierarchy) 
+            if (_instance == null)
             {
-                return pooledObjects[i];
+                // シーン上から取得する
+                var ObjectPool = new GameObject("ObjectPool");
+                _instance = ObjectPool.AddCompornent<ObjectPool>();
+                _instance = GetCompornent<ObjectPool>;
+            }
+            return _instance;
+        }
+    }
+    // ゲームオブジェクトのDictionary
+    private Dictionary<int, List<GameObject>> pooledGameObjects = new Dictionary<int, List<GameObject>>();
+
+    // ゲームオブジェクトをpooledGameObjectsから取得。必要であれば新たに生成。
+    public GameObject GetGameObject(GameObject prefab, Vector2 position, Quaternion rotation)
+    {
+        // プレハブのインスタンスID InstanceID
+        int InstanceID = prefab.GetInstanceID();
+
+        // DictionaryにInstanceIDが存在しなければ作成する
+        if (pooledGameObjects.ContainsKey(InstanceID) == false)
+        {
+            pooledGameObjects.Add(key, new List<GameObject>());
+        }
+
+        List<GameObject> gameObjects = pooledGameObjects[InstanceID];
+        GameObject go = null;
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            go = gameObjects[i];
+            // 未使用時(非アクティブ）
+            if (go.activeInHierarchy == false)
+            {
+
+                go.transform.position = position;//位置を指定
+                go.transform.rotation = rotation;//回転を指定（いらないかもね）
+                go.SetActive(true);//アクティブ状態にする
+                return go;
             }
         }
-        if (willGrow)
-        {
-            GameObject poolObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            pooledObjects.Add(poolObject);
-            return poolObject;
-        }
-        return null;
 
+        // 使用できるものがないので新たに生成する
+        go = (GameObject)Instantiate(prefab, position, rotation);
+        // ObjectPoolゲームオブジェクトの子要素にする
+        go.transform.parent = transform;
+        // リストに追加
+        gameObjects.Add(go);
+        return go;
     }
 
+    // ゲームオブジェクトを非アクティブにする。こうすることで再利用可能状態にする
+    public void ReleaseGameObject(GameObject go)
+    {
+        // 非アクティブにする
+        go.SetActive(false);
+    }
 }
