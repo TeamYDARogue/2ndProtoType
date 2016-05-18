@@ -15,7 +15,7 @@ public class PlayerMover : MonoBehaviour {
     }
 
     void Update()
-    {
+    {   
         m_startPos = gameObject.transform.position;
 
         if(Input.GetButtonDown("Up") && gameObject.transform.position == m_endPos)
