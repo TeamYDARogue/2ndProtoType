@@ -2,6 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// --------------------------------------------------------------------------------
+/// 2016.06.02
+/// 制作者: Kei Yukawa
+/// --------------------------------------------------------------------------------
+/// シーケンス
+/// --------------------------------------------------------------------------------
+/// プレイヤーが移動を選択した場合:
+///     KeyInput -> EnemyAI -> PlayerMove -> EnemyMove -> EnemyAction -> TurnEnd
+/// プレイヤーが行動を選択した場合:
+///     KeyInput -> PlayerAction -> EnemyAI -> EnemyAction -> EnemyMove -> TurnEnd
+/// ---------------------------------------------------------------------------------
+/// </summary>
+/// 
 public enum EnemyState
 {
     eIdle,
