@@ -130,6 +130,9 @@ public class SequenceManager : MonoBehaviour {
     {
         //Debug.Log(NowState.ToString());
         Debug.Log("敵AI選択");
+        Debug.Log("Aキー : 移動");
+        Debug.Log("Sキー : 攻撃");
+
 
         if (Input.GetKeyDown(KeyCode.A))
         {
