@@ -31,6 +31,7 @@ public class FieldManager : MonoBehaviour {
                 var obj = new GameObject("FieldManager!!");
                 m_instance = obj.AddComponent<FieldManager>();
                 m_instance.GetComponent<FieldManager>().enabled = true;
+
             }
             return m_instance;
         }
@@ -42,6 +43,7 @@ public class FieldManager : MonoBehaviour {
         mapnumricvalue = new MapNumericValue();
         layer = new Layer2D();
         Create();
+        ResourceManager.Instance.ResourcesLoad("Game");
       
         for (int x=0;x<layer.Width;x++)
         {
@@ -59,23 +61,24 @@ public class FieldManager : MonoBehaviour {
                         Debug.Log(" ");
                         break;
                     case 1:
-                        /*
-                        //時間で表示
-                        Invoke("",5);
-                        */
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 0, y), Quaternion.identity);
                         Debug.Log("W");
                         break;
                     case 2:
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
                         Debug.Log("G");
                         break;
                     case 3:
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 0, y), Quaternion.identity);
                         Debug.Log("P");
                         break;
                     case 4:
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_a"), new Vector3(x, 0, y), Quaternion.identity);
                         Debug.Log("EN");
                         break;
                     case 5:
                         Debug.Log("EX");
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Exite"), new Vector3(x, 0, y), Quaternion.identity);
                         break;
 
                 }
@@ -93,7 +96,7 @@ public class FieldManager : MonoBehaviour {
     {
 
         mapnumricvalue.Create("RB01");
-   
+
         layer = mapnumricvalue.GetLayer();
     }
     
