@@ -58,26 +58,28 @@ public class FieldManager : MonoBehaviour {
                 switch (layer.Get( x , y))
                 {
                     case 0:
-                        Debug.Log(" ");
+                        //Debug.Log(" ");
                         break;
                     case 1:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 0, y), Quaternion.identity);
-                        Debug.Log("W");
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 1, y), Quaternion.identity);
+                        //Debug.Log("W");
                         break;
                     case 2:
                         Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
-                        Debug.Log("G");
+                        //Debug.Log("G");
                         break;
                     case 3:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 0, y), Quaternion.identity);
-                        Debug.Log("P");
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 1, y), Quaternion.identity);
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
+                        //Debug.Log("P");
                         break;
                     case 4:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_a"), new Vector3(x, 0, y), Quaternion.identity);
-                        Debug.Log("EN");
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_a"), new Vector3(x, 1, y), Quaternion.identity);
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
+                        //Debug.Log("EN");
                         break;
                     case 5:
-                        Debug.Log("EX");
+                        //Debug.Log("EX");
                         Instantiate(ResourceManager.Instance.GetResourceScene("Exite"), new Vector3(x, 0, y), Quaternion.identity);
                         break;
 
