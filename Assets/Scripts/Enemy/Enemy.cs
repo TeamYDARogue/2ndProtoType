@@ -4,8 +4,8 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 
-	private Vector3 originPosition = Vector3.zero;
-	private TweenMove tweenMove = null;
+	//private Vector3 originPosition = Vector3.zero;
+	//private TweenMove tweenMove = null;
 
 	private GameObject m_target;
 	private float m_time = 0;
@@ -14,9 +14,9 @@ public class Enemy : MonoBehaviour {
 	{
 		m_target = serchTag(gameObject, "Player");
 
-		originPosition = transform.position;
-		tweenMove = Tween.Play ("EnemyTween") as TweenMove;
-		tweenMove.Stop ();
+		//originPosition = transform.position;
+		//tweenMove = Tween.Play ("EnemyTween") as TweenMove;
+		//tweenMove.Stop ();
 	}
 
 	void Update()	
@@ -51,20 +51,20 @@ public class Enemy : MonoBehaviour {
 			transform.Translate (Vector3.forward * 2.00f);    //キャラの方に向かう
 		}
 
-		if (Input.GetKeyDown (KeyCode.A)) 
+		/*if (Input.GetKeyDown (KeyCode.A)) 
 		{
 			Debug.Log("TWeen!");
 			OriginEnemy();
-		}
+		}*/
 	}
 
-	void OriginEnemy()
+	/*void OriginEnemy()
 	{
 		tweenMove.startPosition = transform.position; 
 		tweenMove.targetPosition = originPosition;    
 		tweenMove.Play ();
 	}
-
+*/
 	GameObject serchTag(GameObject nowObj,string tagName){
 		float tmpDis = 0;
 		float nearDis = 0;
