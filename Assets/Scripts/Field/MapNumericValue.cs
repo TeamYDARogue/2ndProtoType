@@ -56,14 +56,10 @@ public class MapNumericValue
                     }
                     y++;
                 }
-
             }
         }
-
         // デバッグ出力
-        layer.Dump();
-
-
+        //layer.Dump();
     }
     public Layer2D GetLayer()
     {
