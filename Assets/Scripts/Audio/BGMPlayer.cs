@@ -115,6 +115,15 @@ public class BGMPlayer : MonoBehaviour {
     }
 
     /// <summary>
+    /// 音量変更
+    /// </summary>
+    /// <param name="volume">変更ボリューム値</param>
+    public void ChangeVolume(float volume)
+    {
+        m_source.volume = volume;
+    }
+
+    /// <summary>
     /// 停止
     /// </summary>
     public void Stop()
