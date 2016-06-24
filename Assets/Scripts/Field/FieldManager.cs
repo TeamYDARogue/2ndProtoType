@@ -21,13 +21,10 @@ public class FieldManager : MonoBehaviour
             {
                 /*
                 compornet 　スクリプトからGameObjectにアタッチするため
-
                 */
-
                 var obj = new GameObject("FieldManager!!");
                 instance = obj.AddComponent<FieldManager>();
                 instance.GetComponent<FieldManager>().enabled = true;
-
             }
             return instance;
         }
@@ -40,8 +37,8 @@ public class FieldManager : MonoBehaviour
         mapNumricValue = new MapNumericValue();
         layer = new Layer2D();
 
-        LoadStage("RB01");
-        StartCoroutine(CreateStage());
+        LoadStage("RB01_Groud");
+        LoadStage("RB01_Main");
     }
 
     public Layer2D Getlayer()
@@ -53,46 +50,43 @@ public class FieldManager : MonoBehaviour
     {
         mapNumricValue.Create(mapName);
         layer = mapNumricValue.GetLayer();
+        StartCoroutine(CreateStage());
+
     }
+
 
     IEnumerator CreateStage()
     {
+        GameObject wall = new GameObject("WallParent");
+        GameObject ground = new GameObject("GroundParent");
         for (int x = 0; x < layer.Width; x++)
         {
             for (int y = 0; y < layer.Height; y++)
             {
-
-                /*
-                位置指定
-                動的にオブジェクトの生成
-                */
-
                 switch (layer.Get(x, y))
                 {
                     case 0:
                         break;
                     case 1:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 1, y), Quaternion.identity);
+                        GameObject wallObj = Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 1, y), Quaternion.identity) as GameObject ;
+                        wallObj.transform.parent = wall.transform;
                         break;
                     case 2:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
+                        GameObject groundObj = Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity) as GameObject;
+                        groundObj.transform.parent = ground.transform;
                         break;
                     case 3:
                         Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 1, y), Quaternion.identity);
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
                         break;
                     case 4:
                         Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_a"), new Vector3(x, 1, y), Quaternion.identity);
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity);
                         break;
                     case 5:
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Exite"), new Vector3(x, 0, y), Quaternion.identity);
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Exite"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-
                 }
             }
         }
         yield return null;
     }
-
 }

@@ -23,16 +23,12 @@ public class Layer2D
         }
     }
 
-
     // 作成
     public void Create(int width, int height)
     {
         this.width = width;
         this.height = height;
         _vals = new int[width * height];
-
-
-
     }
 
     // 値の取得
