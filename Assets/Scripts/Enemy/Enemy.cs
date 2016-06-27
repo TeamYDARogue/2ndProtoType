@@ -7,11 +7,12 @@ public class Enemy : MonoBehaviour {
 	//private Vector3 originPosition = Vector3.zero;
 	//private TweenMove tweenMove = null;
 
-	private GameObject m_target;
-	private float m_time = 0;
+	private GameObject m_target;  //最も近いオブジェクト
+	private float m_time = 0;     //経過時間
 
 	void Start()
 	{
+		//最も近かったオブジェクトを取得する処理
 		m_target = serchTag(gameObject, "Player");
 
 		//originPosition = transform.position;
@@ -21,11 +22,13 @@ public class Enemy : MonoBehaviour {
 
 	void Update()	
 	{
+		    //経過時間を取得する処理
 			m_time += Time.deltaTime;
 
 			if (m_time >= 1.0f) {
+			//最も近かったオブジェクトを取得する処理
 				m_target = serchTag (gameObject, "Player");
-			
+			//経過時間を初期化
 				m_time = 0;
 		}
 
@@ -63,23 +66,30 @@ public class Enemy : MonoBehaviour {
 		tweenMove.startPosition = transform.position; 
 		tweenMove.targetPosition = originPosition;    
 		tweenMove.Play ();
-	}
-*/
-	GameObject serchTag(GameObject nowObj,string tagName){
-		float tmpDis = 0;
-		float nearDis = 0;
+	}*/
 
-		GameObject targetObj = null;
-		
+	//指定されたタグの中で最も近い物を取得する処理
+	GameObject serchTag(GameObject nowObj,string tagName){
+
+		float tmpDis = 0;       //距離用一時変数
+		float nearDis = 0;      //最も近いオブジェクトとの距離
+
+		GameObject targetObj = null;     //オブジェクト
+
+		//タグ指定されたプレイヤーを配列で取得
 		foreach (GameObject obs in GameObject.FindGameObjectsWithTag(tagName)) {
+			//Enemyとプレイヤーの距離を取得
 			tmpDis = Vector3.Distance (obs.transform.position, nowObj.transform.position);
-			
+
+			//プレイヤーとの距離が近いか,距離0であればオブジェクト名を取得
+			//一時変数に距離を格納
 			if (nearDis == 0 || nearDis > tmpDis) {
 				nearDis = tmpDis;
 				targetObj = obs;
 			}
 		}
-		
+
+		//最も近かったオブジェクトを返す
 		return targetObj;
 	}
 
