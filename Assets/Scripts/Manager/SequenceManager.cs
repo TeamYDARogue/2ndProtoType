@@ -51,8 +51,8 @@ public class SequenceManager : MonoBehaviour {
         eNextFloor,         //次の階層へ移動
     }
 
-    private delegate GameState GameProc();
-    private Dictionary<GameState, GameProc> m_gameProc = new Dictionary<GameState, GameProc>();
+    private delegate void GameProc();
+    private Dictionary<GameState, GameProc> gameProc = new Dictionary<GameState, GameProc>();
 
     private EnemyState enemyState = EnemyState.eIdle;
     private PlayerState playerState = PlayerState.eIdle;
@@ -66,67 +66,66 @@ public class SequenceManager : MonoBehaviour {
 
     void Awake()
     {
-        m_gameProc.Add(GameState.eKeyInput, KeyInput);
+        gameProc.Add(GameState.eKeyInput, KeyInput);
 
-        m_gameProc.Add(GameState.ePlayerMover, PlayerMove);
-        m_gameProc.Add(GameState.ePlayerAction, PlayerAction);
-        m_gameProc.Add(GameState.ePlayerActionEnd, PlayerActionEnd);
+        gameProc.Add(GameState.ePlayerMover, PlayerMove);
+        gameProc.Add(GameState.ePlayerAction, PlayerAction);
+        gameProc.Add(GameState.ePlayerActionEnd, PlayerActionEnd);
 
-        m_gameProc.Add(GameState.eEnemyAI, EnemyAIReq);
-        m_gameProc.Add(GameState.eEnemyMove, EnemyMove);
-        m_gameProc.Add(GameState.eEnemyAction, EnemyAction);
-        m_gameProc.Add(GameState.eEnemyActionEnd, EnemyActionEnd);
+        gameProc.Add(GameState.eEnemyAI, EnemyAIReq);
+        gameProc.Add(GameState.eEnemyMove, EnemyMove);
+        gameProc.Add(GameState.eEnemyAction, EnemyAction);
+        gameProc.Add(GameState.eEnemyActionEnd, EnemyActionEnd);
 
-        m_gameProc.Add(GameState.eTurnEnd, TurnEnd);
+        gameProc.Add(GameState.eTurnEnd, TurnEnd);
 
         NowState = GameState.eKeyInput;
     }
 
     void Update()
     {
-        NowState = m_gameProc[NowState]();
+        gameProc[NowState]();
     }
 
 
-    GameState KeyInput()
+    void KeyInput()
     {
-        //Debug.Log(NowState.ToString());
         Debug.Log("キー入力待機");
 
         /// 移動選択
         if(Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical") != 0)
         {
             playerState = PlayerState.eMove;
-            return GameState.eEnemyAI;
+            NowState = GameState.eEnemyAI;
         }
 
         /// 攻撃選択
         if(Input.GetKeyDown(KeyCode.Z))
         {
             playerState = PlayerState.eAction;
-            return GameState.ePlayerAction;
+            NowState = GameState.ePlayerAction;
         }
 
-        return GameState.eKeyInput;
+        NowState = GameState.eKeyInput;
     }
 
-    GameState PlayerAction()
+    void PlayerAction()
     {
         //Debug.Log(NowState.ToString());
         Debug.Log("Playerの攻撃");
 
-        return GameState.ePlayerActionEnd;
+        NowState = GameState.ePlayerActionEnd;
     }
 
-    GameState PlayerMove()
+    void PlayerMove()
     {
         //Debug.Log(NowState.ToString());
         Debug.Log("Playerの移動");
 
-        return GameState.ePlayerActionEnd;
+        NowState = GameState.ePlayerActionEnd;
     }
 
-    GameState PlayerActionEnd()
+    void PlayerActionEnd()
     {
         //Debug.Log(NowState.ToString());
         Debug.Log("Playerの行動終了");
@@ -134,13 +133,13 @@ public class SequenceManager : MonoBehaviour {
         if(playerState == PlayerState.eAction)
         {
             playerState = PlayerState.eTurnEnd;
-            return GameState.eEnemyAI;
+            NowState = GameState.eEnemyAI;
         }
 
-        return GameState.eEnemyMove;
+        NowState = GameState.eEnemyMove;
     }
 
-    GameState EnemyAIReq()
+    void EnemyAIReq()
     {
         //Debug.Log(NowState.ToString());
         Debug.Log("敵AI選択");
@@ -152,54 +151,48 @@ public class SequenceManager : MonoBehaviour {
         {
             enemyState = EnemyState.eMove;
 
-            if(playerState == PlayerState.eMove) { return GameState.ePlayerMover; }
+            if(playerState == PlayerState.eMove) { NowState = GameState.ePlayerMover; }
 
-            return GameState.eEnemyMove;
+            NowState = GameState.eEnemyMove;
 
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             enemyState = EnemyState.eAction;
 
-            if(playerState == PlayerState.eMove) { return GameState.ePlayerMover; }
+            if(playerState == PlayerState.eMove) { NowState = GameState.ePlayerMover; }
 
-            return GameState.eEnemyAction;
+            NowState = GameState.eEnemyAction;
 
         }
-        return GameState.eEnemyAI;
+        NowState = GameState.eEnemyAI;
     }
 
-    GameState EnemyMove()
+    void EnemyMove()
     {
-        //Debug.Log(NowState.ToString());
-
-        if(enemyState == EnemyState.eAction) { return GameState.eEnemyAction; }
+        if(enemyState == EnemyState.eAction) { NowState = GameState.eEnemyAction; }
 
         Debug.Log("Enemyの移動");
-        return GameState.eEnemyActionEnd;
+        NowState = GameState.eEnemyActionEnd;
     }
 
-    GameState EnemyAction()
+    void EnemyAction()
     {
-        //Debug.Log(NowState.ToString());
         Debug.Log("Enemyの攻撃");
-        return GameState.eEnemyActionEnd;
+        NowState = GameState.eEnemyActionEnd;
     }
 
-    GameState EnemyActionEnd()
+    void EnemyActionEnd()
     {
-        //Debug.Log(NowState.ToString());
         Debug.Log("Enemyの行動終了");
 
-        return GameState.eTurnEnd;
+        NowState = GameState.eTurnEnd;
     }
 
-    GameState TurnEnd()
+    void TurnEnd()
     {
-        //Debug.Log(NowState.ToString());
-
         Debug.Log("ターン終了");
 
-        return GameState.eKeyInput;
+        NowState = GameState.eKeyInput;
     }
 }
