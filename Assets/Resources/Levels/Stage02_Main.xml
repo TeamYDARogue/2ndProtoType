@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="31" height="31" tilewidth="32" tileheight="32" backgroundcolor="#ffffff" nextobjectid="1">
+ <tileset firstgid="1" name="Wall" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Wall.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="2" name="Ground" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Ground.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="Player" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Player.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="4" name="Enemy01" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Enemy01.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="5" name="Exit" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Exit.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="6" name="Vase" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Vase.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="7" name="Weapon" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Weapon.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="8" name="Spear" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Spear01.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="9" name="SwitchButton" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="SwitchButton.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="10" name="Enemy02" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Enemy02.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="11" name="Save" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Save.png" trans="ff00ff" width="32" height="32"/>
+ </tileset>
+ <layer name="タイル・レイヤー 2" width="31" height="31">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,0,4,9,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,0,8,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,7,0,4,0,8,0,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,1,0,11,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,6,0,0,0,6,1,1,0,0,0,0,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,0,4,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,0,0,0,4,0,0,0,0,10,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,10,0,0,0,0,0,0,0,0,0,0,0,1,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,10,1,9,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,1,0,8,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,5,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
