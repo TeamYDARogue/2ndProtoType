@@ -40,18 +40,12 @@ public class FieldManager : MonoBehaviour
 
         //読み込みテスト完了なデータ
 
-        LoadStage("RB01_Groud");
-        LoadStage("RB01_Main");
-        LoadStage("Stage01_Ground");
-        LoadStage("Stage01_Main");
         LoadStage("Stage02_Ground");
         LoadStage("Stage02_Main");
-        LoadStage("Stage03_Ground");
-        LoadStage("Stage03_Main");
         */
 
-        LoadStage("Stage04_Ground");
-        LoadStage("Stage04_Main");
+        LoadStage("RB01_Ground");
+        LoadStage("RB01_Main");
     }
 
     public Layer2D Getlayer()
@@ -100,29 +94,33 @@ public class FieldManager : MonoBehaviour
                         break;
                     case 5:
                         //出口
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Exite"), new Vector3(x, 1, y), Quaternion.identity);
-                        break;   
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Exit"), new Vector3(x, 1, y), Quaternion.identity);
+                        break;
                     case 6:
+                        //透明な壁
+                        Instantiate(ResourceManager.Instance.GetResourceScene("CleannessWall"), new Vector3(x, 1, y), Quaternion.identity);
+                        break;
+                    case 7:
                         //壺
                         Instantiate(ResourceManager.Instance.GetResourceScene("Vase"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 7:
+                    case 8:
                         //武器
                         Instantiate(ResourceManager.Instance.GetResourceScene("Weapon"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 8:
+                    case 9:
                         //槍
                         Instantiate(ResourceManager.Instance.GetResourceScene("Spear"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 9:
+                    case 10:
                         //スイッチボタン
                         Instantiate(ResourceManager.Instance.GetResourceScene("Switch"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 10:
+                    case 11:
                         //敵B
                         Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_b"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 11:
+                    case 12:
                         //セーブ
                         Instantiate(ResourceManager.Instance.GetResourceScene("Save"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
