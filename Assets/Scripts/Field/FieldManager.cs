@@ -39,12 +39,14 @@ public class FieldManager : MonoBehaviour
         /*
 
         //読み込みテスト完了なデータ
-        LoadStage("Stage02_Ground");
-        LoadStage("Stage02_Main"); 
-        */
         LoadStage("RB01_Ground");
         LoadStage("RB01_Main");
-       
+        */
+
+        LoadStage("Stage01_Ground");
+        LoadStage("Stage01_Main");
+
+
     }
 
     public Layer2D Getlayer()

@@ -14,6 +14,12 @@ public class PlayerMover : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        m_startPos = transform.position;
+        m_endPos = transform.position;
+    }
+
     void Update()
     {   
         m_startPos = gameObject.transform.position;
