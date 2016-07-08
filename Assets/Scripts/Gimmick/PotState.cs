@@ -2,168 +2,155 @@
 using System.Collections;
 
 public class PotState : PlayerMover {
-
+    
+    /*
     private Rigidbody m_RigidBody;
     [SerializeField]
     private GameObject m_Pot;
     [SerializeField]
     private GameObject m_Player;
     private Vector3 m_PotPos;
-    private Vector3 m_Playerpos;
-    private Vector3 m_poss;
+    private Vector3 m_PlayerPos;
+    private Vector3 m_Pos;
     private State m_State = State.NoTacch;
     private PlayerMover m_PlayerMover;
+    */
 
+
+    /*
     void Start()
     {
         m_RigidBody = GetComponent<Rigidbody>();
         m_PotPos = m_Pot.transform.position;
         m_PlayerMover = GetComponent<PlayerMover>();
-        
+        m_Player = GameObject.FindWithTag("Player");
+        m_PotPos = m_Pot.transform.position;
     }
     void FixedUpdate()
     {
-        pos();
-        m_Playerpos = m_Player.transform.position;
+        m_PlayerPos = m_Player.transform.position;
+        m_Pos = m_PlayerPos - m_PotPos;
+        if (m_Pos.x < 2 && m_Pos.x > -2 ||
+            m_Pos.z < 2 && m_Pos.z > -2)
+        {
+            Pos();
+        }
     }
-    void pos()
+    void Pos()
     {
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            m_Pot.transform.Translate(0, 0, -1);
-        }
-        m_Playerpos = m_Player.transform.position;
-        m_PotPos = m_Pot.transform.position;
-        m_poss = m_Playerpos - m_PotPos;
-
-        Debug.Log(m_poss);
-        Debug.Log(m_State);
-
+//////////////////プレイヤーと壺が当たっているか判定///////////
         if (m_State == State.NoTacch)
         {
-            if (m_poss.x == 1 && m_poss.z == 0)
+            if (m_Pos.x == 1 && m_Pos.z == 0)
             {
                 Input.ResetInputAxes();
                 ChangeState(State.LeftTacch);
             }
-            else if (m_poss.x == -1 && m_poss.z == 0)
+            else if (m_Pos.x == -1 && m_Pos.z == 0)
             {
                 Input.ResetInputAxes();
                 ChangeState(State.RightTacch);
             }
-            else if (m_poss.z == 1 && m_poss.x == 0)
+            else if (m_Pos.z == 1 && m_Pos.x == 0)
             {
                 Input.ResetInputAxes();
                 ChangeState(State.DownTacch);
             }
-            else if (m_poss.z == -1 && m_poss.x == 0)
+            else if (m_Pos.z == -1 && m_Pos.x == 0)
             {
                 Input.ResetInputAxes();
                 ChangeState(State.UpTacch);
             }
         }
-        switch (m_State)
+
+//////////////////当たっている状態でキーを入力したとき///////////////
+
+        if (m_State == State.RightTacch)
         {
-            case State.RightTacch:
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    m_Pot.SetActive(false);
-                    //m_RigidBody.constraints = (RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ);
-                    m_Pot.transform.position = new Vector3(100, 100, 100);
-                    m_PotPos = m_Pot.transform.position;
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
-                        Input.GetKeyDown(KeyCode.UpArrow) ||
-                        Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    ChangeState(State.WasTacch);
-                }
-                break;
-            case State.LeftTacch:
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    m_Pot.SetActive(false);
-                    m_Pot.transform.position = new Vector3(100, 100, 100);
-                    m_PotPos = m_Pot.transform.position;
-                }
-                else if (Input.GetKeyDown(KeyCode.RightArrow) ||
-                         Input.GetKeyDown(KeyCode.UpArrow) ||
-                         Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    ChangeState(State.WasTacch);
-                }
-                break;
-            case State.UpTacch:
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    m_Pot.SetActive(false);
-                    m_Pot.transform.position = new Vector3(100, 100, 100);
-                    m_PotPos = m_Pot.transform.position;
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
-                         Input.GetKeyDown(KeyCode.RightArrow) ||
-                         Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    ChangeState(State.WasTacch);
-                }
-                break;
-            case State.DownTacch:
-                if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    //m_RigidBody.constraints = (RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ);
-                    //m_Pot.transform.position = new Vector3(100, 100, 100);
-                    m_Pot.SetActive(false);
-                    m_PotPos = m_Pot.transform.position;
-                    ChangeState(State.NoTacch);
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
-                         Input.GetKeyDown(KeyCode.UpArrow) ||
-                         Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    ChangeState(State.WasTacch);
-                }
-                break;
-            default:
-                break;
-        }
-        if (m_State == State.UpTacch ||
-           m_State == State.DownTacch ||
-           m_State == State.RightTacch ||
-           m_State == State.LeftTacch)
-        {
-            if (m_poss.x == 100 || m_poss.x == -100 ||
-                m_poss.z == 100 || m_poss.z == -100)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                ChangeState(State.NoTacch);
-                //m_RigidBody.constraints = (RigidbodyConstraints.None);
+                m_Pot.transform.position = new Vector3(100, 100, 100);
+                m_PotPos = m_Pot.transform.position;
+                Input.ResetInputAxes();
+               // m_PlayerMover.Update();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
+                    Input.GetKeyDown(KeyCode.UpArrow) ||
+                    Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ChangeState(State.WasTacch);
+            }
+        }
+        if (m_State == State.LeftTacch) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                m_Pot.transform.position = new Vector3(100, 100, 100);
+                m_PotPos = m_Pot.transform.position;
+                Input.ResetInputAxes();
                 //m_PlayerMover.Update();
             }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) ||
+                     Input.GetKeyDown(KeyCode.UpArrow) ||
+                     Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ChangeState(State.WasTacch);
+            }
         }
+        if (m_State == State.UpTacch) {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                m_Pot.transform.position = new Vector3(100, 100, 100);
+                m_PotPos = m_Pot.transform.position;
+                Input.ResetInputAxes();
+                //m_PlayerMover.Update();
+
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
+                     Input.GetKeyDown(KeyCode.RightArrow) ||
+                     Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ChangeState(State.WasTacch);
+            }
+        }
+        if (m_State == State.DownTacch)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                m_Pot.transform.position = new Vector3(100, 100, 100);
+                m_PotPos = m_Pot.transform.position;
+                Input.ResetInputAxes();
+                //m_PlayerMover.Update();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) ||
+                     Input.GetKeyDown(KeyCode.UpArrow) ||
+                     Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChangeState(State.WasTacch);
+            }
+        }
+//////////////もしどれかのキーを押したときに壺の位置が変わっていたら処理//////////    
+
         if (m_State == State.WasTacch)
         {
-            
-            if (m_poss.z != -1 && m_poss.x != 0 || m_poss.z != 1 && m_poss.x != 0 ||
-                m_poss.x != -1 && m_poss.z != 0 || m_poss.x != 1 && m_poss.z != 0)
+            if (m_Pos.z != -1 && m_Pos.x != 0 ||
+                m_Pos.z != 1 && m_Pos.x != 0 ||
+                m_Pos.x != -1 && m_Pos.z != 0 ||
+                m_Pos.x != 1 && m_Pos.z != 0)
             {
-                //m_RigidBody.constraints = (RigidbodyConstraints.None);
                 ChangeState(State.NoTacch);
             }
-
         }
-    }
-    void OnCollisionEnter(Collision c)
+    }*/
+    void OnCollisionEnter(Collision C)
     {
-        Debug.Log("bbbbbBBBBBBBBBBBBBBBBBB");
-
-        if (c.gameObject.tag == "Player")
+        if(C.gameObject.tag == "Player")
         {
-            Debug.Log("CCCCCCCCCCCCCCCCC");
-            m_Pot = c.gameObject;
-            Debug.Log("Aaaaaaaaaaaaaaaaaa");
+            Destroy(C.gameObject);
         }
-
     }
+
+    /*
     public enum State
     {
         UpTacch,
@@ -177,4 +164,5 @@ public class PotState : PlayerMover {
     {
         m_State = s;
     }
+    */
 }
