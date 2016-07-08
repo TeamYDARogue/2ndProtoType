@@ -13,6 +13,25 @@ public class FieldManager : MonoBehaviour
     private MapNumericValue mapNumricValue;
     private Layer2D layer;
     private static FieldManager instance = null;
+
+    enum FieldType
+    {
+        None = 0,
+        Wall = 1,
+        CleannessWall = 2,
+        Ground = 3,
+        Vase = 4,
+        SwitchButton = 5,
+        Spear = 6,
+        Save = 7,
+        Exit = 8,
+        Weapon = 9,
+        Player = 10,
+        Enemy_a = 11,
+        Enemy_b = 12,
+    }
+
+
     public static FieldManager Instance
     {
         get
@@ -30,23 +49,19 @@ public class FieldManager : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         ResourceManager.Instance.ResourcesLoad("Game");
         mapNumricValue = new MapNumericValue();
         layer = new Layer2D();
         /*
-
         //読み込みテスト完了なデータ
-        LoadStage("RB01_Ground");
-        LoadStage("RB01_Main");
-        */
-
         LoadStage("Stage01_Ground");
         LoadStage("Stage01_Main");
+        */
 
-
+        LoadStage("Stage02_Ground");
+        LoadStage("Stage02_Main");
     }
 
     public Layer2D Getlayer()
@@ -62,7 +77,6 @@ public class FieldManager : MonoBehaviour
 
     }
 
-
     IEnumerator CreateStage()
     {
         GameObject wall = new GameObject("WallParent");
@@ -73,55 +87,55 @@ public class FieldManager : MonoBehaviour
             {
                 switch (layer.Get(x, y))
                 {
-                    case 0:
+                    case (int)FieldType.None:
                         break;
                     case 1:
                         //壁
                         GameObject wallObj = Instantiate(ResourceManager.Instance.GetResourceScene("Wall"), new Vector3(x, 1, y), Quaternion.identity) as GameObject ;
                         wallObj.transform.parent = wall.transform;
                         break;
-                    case 2:
+                    case (int)FieldType.CleannessWall:
                         //透明な壁
                         Instantiate(ResourceManager.Instance.GetResourceScene("CleannessWall"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 3:
+                    case (int)FieldType.Ground:
                         //床
                         GameObject groundObj = Instantiate(ResourceManager.Instance.GetResourceScene("Ground"), new Vector3(x, 0, y), Quaternion.identity) as GameObject;
                         groundObj.transform.parent = ground.transform;
                         break;
-                    case 4:
+                    case (int)FieldType.Vase:
                         //壺
                         Instantiate(ResourceManager.Instance.GetResourceScene("Vase"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 5:
+                    case (int)FieldType.SwitchButton:
                         //スイッチボタン
                         Instantiate(ResourceManager.Instance.GetResourceScene("Switch"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 6:
+                    case (int)FieldType.Spear:
                         //槍
                         Instantiate(ResourceManager.Instance.GetResourceScene("Spear"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 7:
+                    case (int)FieldType.Save:
                         //セーブ
                         Instantiate(ResourceManager.Instance.GetResourceScene("Save"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 8:
+                    case (int)FieldType.Exit:
                         //出口
                         Instantiate(ResourceManager.Instance.GetResourceScene("Exit"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 9:
+                    case (int)FieldType.Weapon:
                         //武器
                         Instantiate(ResourceManager.Instance.GetResourceScene("Weapon"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 10:
+                    case (int)FieldType.Player:
                         //プレイヤー
-                        Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 1, y), Quaternion.identity);
+                        Instantiate(ResourceManager.Instance.GetResourceScene("Player"), new Vector3(x, 0.5f, y), Quaternion.identity);
                         break;
-                    case 11:
+                    case (int)FieldType.Enemy_a:
                         //敵A
                         Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_a"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
-                    case 12:
+                    case (int)FieldType.Enemy_b:
                         //敵B
                         Instantiate(ResourceManager.Instance.GetResourceScene("Enemy_b"), new Vector3(x, 1, y), Quaternion.identity);
                         break;
